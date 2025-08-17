@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Interactive Webpage</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-color: #4A90E2;
+            --primary-dark: #3A7BC0;
+            --accent-color: #D0524F;
+            --background-color: #F8F9FA;
+            --container-bg-color: #FFFFFF;
+            --text-color: #333;
+            --light-gray: #E9ECEF;
+            --shadow-light: rgba(0, 0, 0, 0.1);
+            --shadow-medium: rgba(0, 0, 0, 0.2);
+        }
+
+        body {
+            font-family: 'Lato', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+            transition: background-color 0.5s ease;
+        }
+
+        .navbar {
+            background-color: var(--primary-color);
+            width: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            padding: 15px 40px;
+            box-shadow: 0 2px 10px var(--shadow-light);
+            box-sizing: border-box;
+            z-index: 10;
+        }
+
+        .nav-link {
+            color: white;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.1em;
+            padding: 0 20px;
+            border-right: 2px solid rgba(255, 255, 255, 0.3);
+            transition: color 0.2s ease, font-weight 0.2s ease;
+        }
+
+        .nav-link:last-child {
+            border-right: none;
+        }
+
+        .nav-link:hover {
+            color: var(--light-gray);
+            font-weight: 900;
+        }
+
+        .main-container {
+            background-color: var(--container-bg-color);
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px var(--shadow-light);
+            width: 100%;
+            max-width: 600px;
+            text-align: center;
+            margin-top: 80px;
+            animation: fadeIn 1.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h1, h2 {
+            color: var(--primary-color);
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .section {
+            margin-bottom: 30px;
+            padding: 20px;
+            border-top: 1px solid var(--light-gray);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .section:first-of-type {
+            border-top: none;
+        }
+
+        div {
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-size: 1.1em;
+            margin-right: 10px;
+        }
+
+        input[type="text"] {
+            padding: 10px 15px;
+            font-size: 1em;
+            border: 1px solid var(--light-gray);
+            border-radius: 8px;
+            width: calc(100% - 150px);
+            max-width: 250px;
+            box-sizing: border-box;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+        
+        input[type="text"]:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 5px rgba(74, 144, 226, 0.5);
+        }
+
+        button {
+            padding: 12px 24px;
+            font-size: 1em;
+            cursor: pointer;
+            border: none;
+            border-radius: 8px;
+            background-color: var(--primary-color);
+            color: white;
+            box-shadow: 0 4px 10px var(--shadow-light);
+            transition: transform 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+            margin-left: 10px;
+        }
+        
+        .game-buttons-container button {
+            margin: 0 5px;
+            padding: 12px 18px;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            background-color: var(--primary-dark);
+            box-shadow: 0 6px 15px var(--shadow-medium);
+        }
+        
+        button:active {
+            transform: translateY(0);
+            background-color: var(--primary-dark);
+            box-shadow: 0 2px 5px var(--shadow-light) inset;
+        }
+
+        #greetingMessage {
+            font-size: 1.5em;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-top: 20px;
+        }
+
+        #todoList {
+            list-style-type: none;
+            padding: 0;
+            margin-top: 20px;
+        }
+
+        #todoList li {
+            background-color: var(--light-gray);
+            margin: 12px 0;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px var(--shadow-light);
+            width: 100%;
+            max-width: 400px;
+            text-align: left;
+            transition: background-color 0.2s ease, transform 0.2s ease;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        #todoList li:hover {
+            background-color: #dde1e5;
+            transform: scale(1.02);
+        }
+        
+        .clock-container {
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        #currentTime {
+            font-size: 2.5em;
+            font-weight: 700;
+            color: var(--accent-color);
+            margin: 10px 0;
+        }
+        
+        #gameResult {
+            font-size: 1.2em;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        
+        #gameScore, #highScoreDisplay {
+            font-size: 1.5em;
+            font-weight: 700;
+            color: var(--primary-dark);
+        }
+        
+        .score-container {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 10px;
+        }
+
+        @media (max-width: 500px) {
+            .main-container {
+                padding: 20px;
+            }
+            .section div {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 10px;
+            }
+            label {
+                margin: 0;
+            }
+            input[type="text"] {
+                width: 100%;
+                max-width: 100%;
+            }
+            button {
+                width: 100%;
+                margin: 0;
+            }
+            .game-buttons-container {
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+                width: 100%;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <a href="#about" class="nav-link">About</a>
+        <a href="#projects" class="nav-link">Projects</a>
+        <a href="#contact" class="nav-link">Contact</a>
+    </nav>
+
+    <div class="main-container">
+        <h1>My Interactive Webpage! ✨</h1>
+        
+        <div class="section">
+            <label for="nameInput">Enter your name:</label>
+            <div>
+                <input type="text" id="nameInput" placeholder="Your name here">
+                <button id="greetButton">Say Hello</button>
+            </div>
+            <p id="greetingMessage"></p>
+        </div>
+
+        <div class="section">
+            <button id="colorButton">Change Background Color</button>
+        </div>
+    
+        <div class="section">
+            <h2>To-Do List</h2>
+            <div>
+                <input type="text" id="taskInput" placeholder="Add a new task...">
+                <button id="addTaskButton">Add Task</button>
+            </div>
+            <ul id="todoList"></ul>
+        </div>
+
+        <div class="section">
+            <h2>Current Time</h2>
+            <p id="currentTime"></p>
+        </div>
+        
+        <div class="section">
+            <h2>Penalty Shootout ⚽</h2>
+            <p id="gameMessage">Choose a direction to shoot!</p>
+            <div class="game-buttons-container">
+                <button id="shootLeftButton">Left</button>
+                <button id="shootCenterButton">Center</button>
+                <button id="shootRightButton">Right</button>
+            </div>
+            <p id="gameResult"></p>
+            <div class="score-container">
+                <p id="gameScore">Score: 0</p>
+                <p id="highScoreDisplay">High Score: 0</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const colorButton = document.getElementById('colorButton');
+        const body = document.body;
+        const colors = ['#f9e1db', '#d2e4f0', '#d8e4f0', '#e9d6f9', '#fbf5d1'];
+
+        colorButton.addEventListener('click', () => {
+            const randomIndex = Math.floor(Math.random() * colors.length);
+            const newColor = colors[randomIndex];
+            body.style.backgroundColor = newColor;
+        });
+
+        const greetButton = document.getElementById('greetButton');
+        const nameInput = document.getElementById('nameInput');
+        const greetingMessage = document.getElementById('greetingMessage');
+
+        greetButton.addEventListener('click', () => {
+            const name = nameInput.value;
+            if (name) {
+                greetingMessage.textContent = `Hello, ${name}! Welcome.`;
+            } else {
+                greetingMessage.textContent = "Please enter your name.";
+            }
+        });
+
+        const taskInput = document.getElementById('taskInput');
+        const addTaskButton = document.getElementById('addTaskButton');
+        const todoList = document.getElementById('todoList');
+
+        addTaskButton.addEventListener('click', () => {
+            const taskText = taskInput.value.trim();
+            if (taskText !== "") {
+                const newTask = document.createElement('li');
+                newTask.textContent = taskText;
+                newTask.addEventListener('click', () => {
+                    todoList.removeChild(newTask);
+                });
+                todoList.appendChild(newTask);
+                taskInput.value = '';
+            }
+        });
+
+        function updateClock() {
+            const now = new Date();
+            const h = now.getHours().toString().padStart(2, '0');
+            const m = now.getMinutes().toString().padStart(2, '0');
+            const s = now.getSeconds().toString().padStart(2, '0');
+            document.getElementById('currentTime').textContent = `${h}:${m}:${s}`;
+        }
+        
+        setInterval(updateClock, 1000);
+        updateClock();
+        
+        const shootLeft = document.getElementById('shootLeftButton');
+        const shootCenter = document.getElementById('shootCenterButton');
+        const shootRight = document.getElementById('shootRightButton');
+        const gameMessage = document.getElementById('gameMessage');
+        const gameResult = document.getElementById('gameResult');
+        const gameScore = document.getElementById('gameScore');
+        const highScoreDisplay = document.getElementById('highScoreDisplay');
+
+        let score = 0;
+        let highScore = 0;
+        const directions = ['left', 'center', 'right'];
+        
+        function playGame(shotDir) {
+            const keeperDir = directions[Math.floor(Math.random() * directions.length)];
+            
+            gameMessage.textContent = `You shot ${shotDir}!`;
+
+            setTimeout(() => {
+                if (shotDir === keeperDir) {
+                    gameResult.textContent = `The goalkeeper dived ${keeperDir}! Missed... 😭`;
+                    if (score > highScore) {
+                        highScore = score;
+                    }
+                    score = 0;
+                } else {
+                    gameResult.textContent = `GOAL! The goalkeeper dived ${keeperDir}. 🥅`;
+                    score++;
+                }
+                
+                gameScore.textContent = `Score: ${score}`;
+                highScoreDisplay.textContent = `High Score: ${highScore}`;
+            }, 1000);
+        }
+        
+        shootLeft.addEventListener('click', () => playGame('left'));
+        shootCenter.addEventListener('click', () => playGame('center'));
+        shootRight.addEventListener('click', () => playGame('right'));
+    </script>
+</body>
+</html>
